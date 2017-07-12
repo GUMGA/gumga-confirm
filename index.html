@@ -9,14 +9,17 @@
   <body  ng-controller="Ctrl as ctrl">
     <br>
 
-    <div class="container">
+    <br><br>
+
+    <div class="container" ng-init="valor = 'mateus'">
       <button
         type="button"
         class="btn btn-danger"
-        ng-click="ctrl.remove()"
+        ng-click="ctrl.remove(valor)"
         gumga-confirm="Tem certeza que deseja deletar?"
         size="md"
         icon="glyphicon glyphicon-question-sign"
+        uib-tooltip="Excluir"
         confirm-button-class="gmd btn btn-primary"
         dismiss-button-class="gmd btn btn-default"
         dismiss-button="Não"
