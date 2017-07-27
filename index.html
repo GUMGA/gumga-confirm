@@ -11,10 +11,23 @@
 
     <br><br>
 
+    <div ng-init="jesus = true">
+
+    </div>
+
+
+    <button type="button" ng-click="jesus = !jesus" name="button">Teste</button>
+
+
+
     <div class="container" ng-init="valor = 'mateus'">
+
+      {{jesus}}
+
       <button
         type="button"
         class="btn btn-danger"
+        ng-disabled="jesus"
         ng-click="ctrl.remove(valor)"
         gumga-confirm="Tem certeza que deseja deletar?"
         size="md"
@@ -26,6 +39,7 @@
         confirm-button="Sim">
         Excluir
       </button>
+
     </div>
 
 

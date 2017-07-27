@@ -76,18 +76,19 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-Confirm.$inject = ['$interpolate', '$uibModal', '$compile'];
+Confirm.$inject = ['$interpolate', '$uibModal', '$compile', '$rootScope'];
 
-function Confirm($interpolate, $uibModal, $compile) {
+function Confirm($interpolate, $uibModal, $compile, $rootScope) {
 
   return {
     restrict: 'A',
-    priority: 1,
+    priority: 0,
     terminal: true,
-    scope: {
-      ngClick: '&?'
-    },
+    scope: false,
     link: function link($scope, $element, $attrs) {
+      var scope = $rootScope.$new();
+      scope.ngClick = $attrs.ngClick;
+      $element.removeAttr('ng-click').removeAttr('data-ng-click');
 
       var confirmationMessage = $interpolate($attrs.gumgaConfirm)($scope);
       var _size = $attrs.size || 'md';
@@ -150,7 +151,7 @@ function Confirm($interpolate, $uibModal, $compile) {
         var template = '\n        <div class="gumga-confirm modal-body">\n          <h3>\n            <i class="{{ ::ctrl.icon }}"></i>\n            {{ ::ctrl.message }}\n          </h3>\n        </div>\n        <div class="modal-footer">\n          <button type="button" class="{{ ::ctrl.dismissButtonClass }}" ng-click="ctrl.close(false)">{{ ::ctrl.dismissButton }}</button>\n          <button type="button" class="{{ ::ctrl.confirmButtonClass }}" ng-click="ctrl.close(true)"> {{ ::ctrl.confirmButton }}</button>\n        </div>';
 
         $uibModal.open({ controller: controller, template: template, size: _size, controllerAs: controllerAs, resolve: resolve, backdrop: 'static' }).result.then(function (value) {
-          return $scope.$eval($scope.ngClick);
+          return $scope.$eval(scope.ngClick);
         }, function (reject) {
           return $scope.$eval(whatToDoWhenDismiss);
         });

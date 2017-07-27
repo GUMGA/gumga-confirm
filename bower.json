@@ -1,6 +1,6 @@
 {
   "name": "gumga-confirm",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Gumga Confirm",
   "main": "./src/confirm.js",
   "authors": [

@@ -1,15 +1,16 @@
-Confirm.$inject = ['$interpolate', '$uibModal', '$compile']
+Confirm.$inject = ['$interpolate', '$uibModal', '$compile', '$rootScope']
 
-function Confirm($interpolate, $uibModal, $compile){
+function Confirm($interpolate, $uibModal, $compile, $rootScope){
 
   return {
     restrict: 'A',
-    priority: 1,
+    priority: 0,
     terminal: true,
-    scope: {
-      ngClick : '&?'
-    },
+    scope: false,
     link($scope, $element, $attrs){
+      var scope = $rootScope.$new();
+      scope.ngClick = $attrs.ngClick;
+      $element.removeAttr('ng-click').removeAttr('data-ng-click');
 
       const confirmationMessage = $interpolate($attrs.gumgaConfirm)($scope)
       const size                = $attrs.size               || 'md'
@@ -70,7 +71,7 @@ function Confirm($interpolate, $uibModal, $compile){
           .open({ controller, template, size, controllerAs, resolve, backdrop: 'static' })
           .result
           .then(
-                value =>  $scope.$eval($scope.ngClick),
+                value =>  $scope.$eval(scope.ngClick),
                 reject => $scope.$eval(whatToDoWhenDismiss)
               )
       })

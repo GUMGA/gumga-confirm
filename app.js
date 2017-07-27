@@ -3,7 +3,7 @@ angular.module('app', ['ui.bootstrap','gumga.confirm'])
     var ctrl = this;
 
     ctrl.remove = function(valor){
-      alert('removeu: '+valor);
+      console.log('removeu: '+valor);
     }
 
   })
